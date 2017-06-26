@@ -7,6 +7,7 @@ class TasksController < ApplicationController
   def create
     @list = List.find(params[:list_id])
     @task = @list.tasks.new(task_params)
+    @task.done = false;
     if @task.save
       redirect_to list_path(@task.list)
     else
@@ -17,10 +18,17 @@ class TasksController < ApplicationController
   def edit
     @list = List.find(params[:list_id])
     @task = @list.tasks.find(params[:id])
-    render :edit
+  end
+
+  def done
+    @list = List.find(params[:list_id])
+    @task = @list.tasks.find(params[:id])
+    @task.done = true;
+    redirect_to list_path(@list)
   end
 
   def update
+    byebug
     @list = List.find(params[:list_id])
     @task = @list.tasks.find(params[:id])
     if @task.update(task_params)
@@ -31,6 +39,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    byebug
     @list = List.find(params[:list_id])
     @task = @list.tasks.find(params[:id])
     @task.destroy

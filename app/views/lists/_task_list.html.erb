@@ -1,0 +1,17 @@
+<ul>
+  <% chunk.each do |task| %>
+    <li>
+      <%= task.description %> |
+      <%= link_to "Edit", edit_list_task_path(@list, task) %> |
+      <%= link_to "Delete", list_task_path(@list, task),
+        :data => {
+          :confirm => "Are you sure?",
+          :method => "delete"
+        }
+      %> |
+      <% unless task.done %>
+        <%= link_to "Done", list_task_path(@list, task), method: "done" %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
